@@ -39,7 +39,7 @@ const state = proxy({
   textLayers: [{
     id: 1,
     text: 'Sample',
-    position: { x: 0, y: 0.04, z: 0.15 },
+    position: { x: 0, y: 0, z: 0.15 },
     fontSize: 100,
     fontWeight: 300,
     fontFamily: 'Arial',
@@ -137,7 +137,7 @@ function TextDecal({ layer }) {
 
 function Shirt() {
   const snap = useSnapshot(state)
-  const { nodes, materials } = useGLTF('/hoodie.glb')
+  const { nodes, materials } = useGLTF('/shirt_baked_collapsed.glb')
   const logoTexture = useTexture(snap.logoDecal ? `/${snap.logoDecal}.png` : '/placeholder.png')
   
   const shirtTextureMap = useTexture(snap.shirtTexture || '/placeholder.png')
@@ -319,7 +319,7 @@ function TextCustomizationPanel() {
       <h3 className="text-xl">Text Customization</h3>
       
       <div className="border rounded-lg p-4">
-        <h4 className="text-sm font-medium mb-2">Text Layers</h4>
+        <h4 className="text-sm font-medium mb-2 dark:text-white dark:bg-gray-900">Text Layers</h4>
         <div className="space-y-2">
           {snap.textLayers.map((layer, index) => (
             <div 
@@ -329,7 +329,7 @@ function TextCustomizationPanel() {
               }`}
               onClick={() => state.activeTextLayer = index}
             >
-              <span className="truncate">{layer.text}</span>
+              <span className="truncate dark:text-black">{layer.text}</span>
               <button 
                 onClick={(e) => {
                   e.stopPropagation()
@@ -338,7 +338,7 @@ function TextCustomizationPanel() {
                     state.activeTextLayer = Math.max(0, snap.activeTextLayer - 1)
                   }
                 }}
-                className="text-red-500 hover:text-red-700"
+                className="text-red-500 hover:text-red-700 "
               >
                 ×
               </button>
@@ -347,7 +347,7 @@ function TextCustomizationPanel() {
         </div>
         <button 
           onClick={addNewLayer}
-          className="mt-2 w-full p-2 border-2 border-dashed rounded hover:bg-gray-50"
+          className="mt-2 w-full p-2 border-2 border-dashed rounded hover:bg-gray-50 dark:hover:bg-gray-500 dark:hover:text-white"
         >
           + Add Text Layer
         </button>
@@ -361,7 +361,7 @@ function TextCustomizationPanel() {
               type="text"
               value={activeLayer.text}
               onChange={(e) => updateLayer({ text: e.target.value })}
-              className="w-full p-2 border rounded"
+              className="w-full p-2 border rounded dark:text-white dark:bg-gray-900"
             />
           </div>
 
@@ -377,12 +377,12 @@ function TextCustomizationPanel() {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium">Font Size</label>
+              <label className="block text-sm font-medium ">Font Size</label>
               <input
                 type="number"
                 value={activeLayer.fontSize}
                 onChange={(e) => updateLayer({ fontSize: parseInt(e.target.value) })}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:text-white dark:bg-gray-900"
               />
             </div>
 
@@ -391,7 +391,7 @@ function TextCustomizationPanel() {
               <select
                 value={activeLayer.fontWeight}
                 onChange={(e) => updateLayer({ fontWeight: parseInt(e.target.value) })}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:text-white dark:bg-gray-900"
               >
                 <option value="300">Light</option>
                 <option value="400">Regular</option>
@@ -405,7 +405,7 @@ function TextCustomizationPanel() {
               <select
                 value={activeLayer.fontFamily}
                 onChange={(e) => updateLayer({ fontFamily: e.target.value })}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:text-white dark:bg-gray-900"
               >
                 <option value="Arial">Arial</option>
                 <option value="Times New Roman">Times New Roman</option>
@@ -414,7 +414,7 @@ function TextCustomizationPanel() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Font Color</label>
+              <label className="block text-sm font-medium ">Font Color</label>
               <input
                 type="color"
                 value={activeLayer.color}
@@ -424,7 +424,7 @@ function TextCustomizationPanel() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium">Side</label>
+              <label className="block text-sm font-medium ">Side</label>
               <select
                 value={activeLayer.side}
                 onChange={(e) => updateLayer({ 
@@ -434,7 +434,7 @@ function TextCustomizationPanel() {
                     z: e.target.value === 'back' ? -0.15 : 0.15
                   }
                 })}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded dark:text-white dark:bg-gray-900"
               >
                 <option value="front">Front</option>
                 <option value="back">Back</option>
@@ -540,13 +540,13 @@ function TextureCustomizationPanel() {
         ))}
       </div>
 
-      <input
+      {/* <input
         type="file"
         ref={textureInputRef}
         onChange={handleTextureUpload}
         className="hidden"
         accept="image/*"
-      />
+      /> */}
     </div>
   )
 }
@@ -578,10 +578,10 @@ function FinishDesigningPanel() {
       state.exportProgress = 0
 
       const canvas = canvasRef.current
-      const stream = canvas.captureStream(60) // Increase to 60 fps for higher quality
+      const stream = canvas.captureStream(80) 
       const recorder = new MediaRecorder(stream, { 
         mimeType: 'video/webm; codecs=vp9',
-        videoBitsPerSecond: 8000000 // 8 Mbps for higher quality
+        videoBitsPerSecond: 8000000 
       })
 
       const chunks = []
@@ -616,7 +616,7 @@ function FinishDesigningPanel() {
     <div className="space-y-4">
       <h3 className="text-xl">Finish Designing</h3>
       <div className="text-center">
-        <div className="w-48 h-48 mx-auto mb-4 bg-gray-100 rounded-lg overflow-hidden">
+        <div className="w-48 h-48 mx-auto mb-4 dark:bg-gray-900 rounded-lg overflow-hidden">
           <ShirtCanvas ref={canvasRef} />
         </div>
         <div className="space-y-2">
@@ -656,6 +656,7 @@ export default function DesignTool() {
   const snap = useSnapshot(state)
   const logoInputRef = useRef(null)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isCustomizationOpen, setIsCustomizationOpen] = useState(false)
 
   const handleLogoUpload = async (event) => {
     const file = event.target.files?.[0]
@@ -687,11 +688,11 @@ export default function DesignTool() {
   }
 
   const features = [
-    { id: 'logo', icon: Upload, label: 'Logo Customization' },
-    { id: 'text', icon: Type, label: 'Text Customization' },
-    { id: 'color', icon: Palette, label: 'Color Customization' },
-    { id: 'texture', icon: FileIcon, label: 'Texture Customization' },
-    { id: 'finish', icon: Rocket, label: 'Finish Designing' }
+    { id: 'logo', icon: Upload, label: 'Logo' },
+    { id: 'text', icon: Type, label: 'Text' },
+    { id: 'color', icon: Palette, label: 'Color' },
+    { id: 'texture', icon: FileIcon, label: 'Texture' },
+    { id: 'finish', icon: Rocket, label: 'Finish' }
   ]
 
   const logoPositions = {
@@ -700,10 +701,6 @@ export default function DesignTool() {
       { position: 'front', marker: 'center', label: 'Center Chest' },
       { position: 'front', marker: 'across', label: 'Across Chest' }
     ],
-    // 'Sleeves': [
-    //   { position: 'front', marker: 'left-sleeve', label: 'Left Sleeve' },
-    //   { position: 'front', marker: 'right-sleeve', label: 'Right Sleeve' }
-    // ],
     'Side': [
       { position: 'front', marker: 'left', label: 'Left Side' },
       { position: 'front', marker: 'right', label: 'Right Side' }
@@ -716,9 +713,10 @@ export default function DesignTool() {
   }
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen dark:bg-gray-900">
+      {/* Mobile menu button */}
       <button 
-        className="md:hidden fixed top-4 right-4 z-50 p-2 bg-white rounded-md shadow-lg"
+        className="md:hidden fixed top-32 left-14 z-50 p-2 bg-white rounded-md shadow-lg"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -726,15 +724,26 @@ export default function DesignTool() {
         </svg>
       </button>
 
+      {/* Mobile customization panel toggle */}
+      <button 
+        className="md:hidden fixed top-32 right-4 z-50 p-2 bg-white rounded-md shadow-lg"
+        onClick={() => setIsCustomizationOpen(!isCustomizationOpen)}
+      >
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        </svg>
+      </button>
+
+      {/* Features panel */}
       <div className={`
-        fixed md:static inset-0 z-40
-        w-72 bg-white border-r border-gray-200
+        fixed md:static inset-y-0 left-0 z-40 mt-16 dark:bg-gray-900 dark:text-white
+        w-30 bg-white border-r border-gray-200
         transform transition-transform duration-300 ease-in-out
         ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full'}
         md:translate-x-0
       `}>
-        <h2 className="p-4 text-2xl font-bold">Features Panel</h2>
-        <div className="space-y-px">
+        <h2 className="p-4 text-2xl font-bold">Features</h2>
+        <div className="flex flex-col">
           {features.map(feature => (
             <button
               key={feature.id}
@@ -742,21 +751,19 @@ export default function DesignTool() {
                 state.activeFeature = feature.id;
                 setIsMobileMenuOpen(false);
               }}
-              className={`flex items-center justify-between w-full p-4 text-left hover:bg-gray-50 ${
+              className={`flex items-center  md:justify-start w-full p-4 text-left hover:bg-gray-50 dark:hover:bg-black ${
                 snap.activeFeature === feature.id ? 'text-green-500' : ''
               }`}
             >
-              <div className="flex items-center gap-3">
-                <feature.icon className={`w-5 h-5 ${snap.activeFeature === feature.id ? 'text-green-500' : ''}`} />
-                <span>{feature.label}</span>
-              </div>
-              <span>›</span>
+              <feature.icon className={`w-5 h-5 ${snap.activeFeature === feature.id ? 'text-green-500' : ''}`} />
+              <span className="hidden md:inline ml-3">{feature.label}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <div className="flex-1 flex flex-col">
+      {/* Main content */}
+      <div className="flex-1 flex flex-col dark:text-white dark:bg-gray-900">
         <h1 className="p-4 text-2xl font-bold text-center border-b">T-Shirt Sample</h1>
         <div className="flex-1 relative">
           {snap.isLoading && (
@@ -773,19 +780,20 @@ export default function DesignTool() {
         </div>
       </div>
 
+      {/* Customization panel */}
       <div className={`
-        fixed md:static inset-0 z-40
+        fixed md:static inset-y-0 right-0 z-40 mt-16 dark:bg-gray-900 dark:text-white
         w-80 bg-white border-l border-gray-200
         transform transition-transform duration-300 ease-in-out
-        ${snap.activeFeature && isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
+        ${isCustomizationOpen ? 'translate-x-0' : 'translate-x-full'}
         md:translate-x-0
       `}>
-        <h2 className="p-4 text-2xl font-bold">Customization Panel</h2>
+        <h2 className="p-4 text-2xl font-bold">Customization</h2>
         <div className="p-4 overflow-y-auto max-h-[calc(100vh-5rem)]">
           {snap.activeFeature === 'logo' && (
             <div className="space-y-6">
               <h3 className="text-xl">Logo Customization</h3>
-              <input
+              {/* <input
                 type="file"
                 ref={logoInputRef}
                 onChange={handleLogoUpload}
@@ -798,7 +806,7 @@ export default function DesignTool() {
               >
                 <Upload className="w-8 h-8 text-gray-400" />
                 <span className="text-gray-500">Click to upload</span>
-              </button>
+              </button> */}
 
               <div className="space-y-6">
                 {Object.entries(logoPositions).map(([group, positions]) => (
@@ -829,27 +837,16 @@ export default function DesignTool() {
             </div>
           )}
 
-          {snap.activeFeature === 'text' && (
-            <TextCustomizationPanel />
-          )}
-
-          {snap.activeFeature === 'color' && (
-            <ColorCustomizationPanel />
-          )}
-
-          {snap.activeFeature === 'texture' && (
-            <TextureCustomizationPanel />
-          )}
-
-          {snap.activeFeature === 'finish' && (
-            <FinishDesigningPanel />
-          )}
+          {snap.activeFeature === 'text' && <TextCustomizationPanel />}
+          {snap.activeFeature === 'color' && <ColorCustomizationPanel />}
+          {snap.activeFeature === 'texture' && <TextureCustomizationPanel />}
+          {snap.activeFeature === 'finish' && <FinishDesigningPanel />}
         </div>
       </div>
     </div>
   )
 }
 
-useGLTF.preload('/hoodie.glb')
+useGLTF.preload('/shirt_baked_collapsed.glb')
 ;['/react.png', '/three2.png', '/pmndrs.png', '/placeholder.png', '/textures/plaidpng','/textures/plaid-blue.png', '/textures/plaid-red.png', '/textures/knit.png', '/textures/gray.png', '/textures/plaid-red.png', '/textures/knit.png', '/textures/gray.png', '/textures/stripes.png', '/textures/red.png','/textures/cream.png'].forEach(useTexture.preload)
 
