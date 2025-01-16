@@ -83,7 +83,7 @@
 //   );
 // }
 import { FiCheck } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Pricing() {
   const navigate = useNavigate();
@@ -134,12 +134,14 @@ export default function Pricing() {
                 </li>
               </ul>
             </div>
+            <Link to='/design'>
             <button
               className="w-full px-6 py-3 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-indigo-100 dark:bg-gray-700 dark:text-indigo-400 dark:hover:bg-gray-600 mt-auto"
               onClick={handleGetStarted}
             >
               Get started
             </button>
+            </Link>
           </div>
 
           <div className="bg-indigo-600 rounded-lg p-8 shadow-lg flex flex-col justify-between h-full">
@@ -159,10 +161,10 @@ export default function Pricing() {
                   <FiCheck className="mr-2" />
                   3D Model Export
                 </li>
-                <li className="flex items-center text-white">
+                {/* <li className="flex items-center text-white">
                   <FiCheck className="mr-2" />
                   Custom Background Image
-                </li>
+                </li> */}
                 <li className="flex items-center text-white">
                   <FiCheck className="mr-2" />
                   Unlock All Garments

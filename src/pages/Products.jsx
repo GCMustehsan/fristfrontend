@@ -69,6 +69,7 @@ import AOS from "aos";
 import shirt from '../assets/TShirts.png';
 import hoodie from '../assets/hoodies.png';
 import DressShirt from '../assets/DressShirts.png';
+import { Link } from "react-router-dom";
 
 // Initialize AOS
 AOS.init({ duration: 1000 });
@@ -135,6 +136,7 @@ export default function Products() {
                         className="w-full h-full object-cover rounded-md transform group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
+                    <Link to='/design'>
                     <motion.button
                       className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-700 rounded-md flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors"
                       whileHover={{ scale: 1.05 }}
@@ -143,6 +145,7 @@ export default function Products() {
                       <FiUpload className="mr-2" />
                       Select
                     </motion.button>
+                    </Link>
                   </>
                 )}
               </motion.div>

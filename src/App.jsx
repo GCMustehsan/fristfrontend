@@ -107,7 +107,7 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import Payment from "./pages/Payment";
-const DesignTool = React.lazy(() => import("./pages/DesignTool"));
+const DesignTool = React.lazy(() => import("./pages/Sample"));
 const SignUp = React.lazy(() => import("./pages/SignUp"));
 const SignIn = React.lazy(() => import("./pages/SignIn"));
 const ShirtCustomizer = React.lazy(() => import("./pages/ShirtCustomizer"));

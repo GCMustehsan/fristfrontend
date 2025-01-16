@@ -540,13 +540,13 @@ function TextureCustomizationPanel() {
         ))}
       </div>
 
-      <input
+      {/* <input
         type="file"
         ref={textureInputRef}
         onChange={handleTextureUpload}
         className="hidden"
         accept="image/*"
-      />
+      /> */}
     </div>
   )
 }
@@ -793,7 +793,7 @@ export default function DesignTool() {
           {snap.activeFeature === 'logo' && (
             <div className="space-y-6">
               <h3 className="text-xl">Logo Customization</h3>
-              <input
+              {/* <input
                 type="file"
                 ref={logoInputRef}
                 onChange={handleLogoUpload}
@@ -806,7 +806,7 @@ export default function DesignTool() {
               >
                 <Upload className="w-8 h-8 text-gray-400" />
                 <span className="text-gray-500">Click to upload</span>
-              </button>
+              </button> */}
 
               <div className="space-y-6">
                 {Object.entries(logoPositions).map(([group, positions]) => (

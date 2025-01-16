@@ -231,11 +231,11 @@ export default function SignIn() {
                   </label>
                 </div>
 
-                <div className="text-sm">
+                {/* <div className="text-sm">
                   <Link to="/forgot-password" className="text-blue-600 hover:underline font-semibold">
                     Forgot your password?
                   </Link>
-                </div>
+                </div> */}
               </div>
 
               <div className="!mt-8">
